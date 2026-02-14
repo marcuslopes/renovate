@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "renovate-bot.fullname" . }}
+  labels:
+    {{- include "renovate-bot.labels" . | nindent 4 }}
+data:
+  config.js: |
+    module.exports = {
+      platform: {{ .Values.platform | quote }},
+      endpoint: {{ .Values.endpoint | quote }},
+      autodiscover: false,
+      repositories: {{ .Values.repositories | toJson }},
+      onboarding: {{ .Values.renovate.onboarding }},
+      onboardingConfig: {
+        extends: ["config:recommended"],
+        draftPR: true,
+        schedule: ["before 9:00am every weekday"],
+      },
+      extends: ["config:recommended"],
+      draftPR: {{ .Values.renovate.draftPR }},
+      prConcurrentLimit: {{ .Values.renovate.prConcurrentLimit }},
+      prHourlyLimit: {{ .Values.renovate.prHourlyLimit }},
+      branchConcurrentLimit: {{ .Values.renovate.branchConcurrentLimit }},
+      stabilityDays: {{ .Values.renovate.stabilityDays }},
+      automerge: {{ .Values.renovate.automerge }},
+      platformAutomerge: {{ .Values.renovate.platformAutomerge }},
+      fetchReleaseNotes: true,
+      schedule: ["before 9:00am every weekday"],
+      packageRules: [
+        {
+          description: "Group non-major updates by package manager",
+          matchUpdateTypes: ["minor", "patch", "pin", "digest"],
+          groupName: "non-major dependencies",
+          groupSlug: "non-major",
+        },
+      ],
+    };

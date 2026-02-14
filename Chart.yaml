@@ -1,0 +1,6 @@
+apiVersion: v2
+name: renovate-bot
+description: Renovate Bot deployed as a Kubernetes CronJob targeting Azure DevOps
+type: application
+version: 0.1.0
+appVersion: "37"

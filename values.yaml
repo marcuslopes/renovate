@@ -1,0 +1,44 @@
+image:
+  repository: renovate/renovate
+  tag: "37-slim"
+  pullPolicy: IfNotPresent
+
+schedule: "0 8,14 * * 1-5"
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 2Gi
+    cpu: 1000m
+
+# Azure DevOps PAT token
+azureDevOps:
+  token: ""
+
+# Platform configuration
+platform: azure
+endpoint: ""  # e.g. https://dev.azure.com/myorg/
+repositories: []
+# - project/repo1
+# - project/repo2
+
+# Renovate behavior
+renovate:
+  logLevel: info
+  onboarding: true
+  draftPR: true
+  prConcurrentLimit: 5
+  prHourlyLimit: 2
+  branchConcurrentLimit: 10
+  stabilityDays: 3
+  automerge: false
+  platformAutomerge: false
+
+# CronJob settings
+activeDeadlineSeconds: 3600
+backoffLimit: 1
+concurrencyPolicy: Forbid
+successfulJobsHistoryLimit: 3
+failedJobsHistoryLimit: 3
