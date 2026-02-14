@@ -33,6 +33,18 @@ spec:
                   value: /opt/renovate/config.js
                 - name: LOG_LEVEL
                   value: {{ .Values.renovate.logLevel | quote }}
+                {{- if .Values.opentelemetry.enabled }}
+                - name: OTEL_EXPORTER_OTLP_ENDPOINT
+                  value: {{ .Values.opentelemetry.endpoint | quote }}
+                - name: OTEL_SERVICE_NAME
+                  value: {{ .Values.opentelemetry.serviceName | quote }}
+                - name: OTEL_SERVICE_NAMESPACE
+                  value: {{ .Values.opentelemetry.serviceNamespace | quote }}
+                {{- if .Values.opentelemetry.debugConsole }}
+                - name: RENOVATE_TRACING_CONSOLE_EXPORTER
+                  value: "true"
+                {{- end }}
+                {{- end }}
               resources:
                 {{- toYaml .Values.resources | nindent 16 }}
               volumeMounts:

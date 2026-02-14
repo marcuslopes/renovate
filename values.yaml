@@ -42,3 +42,11 @@ backoffLimit: 1
 concurrencyPolicy: Forbid
 successfulJobsHistoryLimit: 3
 failedJobsHistoryLimit: 3
+
+# OpenTelemetry tracing
+opentelemetry:
+  enabled: false
+  endpoint: ""  # e.g. http://otel-collector.observability.svc.cluster.local:4318
+  serviceName: "renovate"
+  serviceNamespace: "renovatebot.com"
+  debugConsole: false
